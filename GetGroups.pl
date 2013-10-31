@@ -86,7 +86,7 @@ if (lc($cfg->param('general.generateSAAliases')) eq 'yes') {
 	my $aliasTmpFile = $tempDir .'/user-aliases';
 	open(my $aliasTmp, '>',$aliasTmpFile) or die "Could not open $aliasTmpFile";
 	foreach my $name (keys %fullNames) {
-		print $aliasTmp $fullNames{$name} .' '. $name ."\n";
+		print $aliasTmp $fullNames{$name} .' '. lc($name) ."\n";
 	}
 	close($aliasTmp);
 	unlink $cfg->param('general.SAAliasesFile');

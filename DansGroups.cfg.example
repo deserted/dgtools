@@ -18,6 +18,7 @@ host=ldap.host.name
 ## DN strings for finding groups and Users
 groupdn='ou=Groups,dc=somedomain,dc=com'
 userdn='OU=Users,dc=somedomain,dc=com'
+
 ## Define login for LDAP server
 username=ldap user
 password=ldap pass
