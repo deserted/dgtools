@@ -61,7 +61,7 @@ my $queryHandle = DGTools::LDAP::GroupQuery->new($LDAPHost, $LDAPGroupDN, $LDAPU
 ##Define a temp file for the config to write to
 my $tempfile = $tempDir.'/dansfilter.tmp';
 my %users;
-
+my %fullNames;
 ## Retrieve list of Users for each group, then feed them into the %users hash
 ## If a user is in an elevated group, it will not be replaced with the standard group
 foreach my $groupName (keys %{$groups}) {
@@ -70,7 +70,9 @@ foreach my $groupName (keys %{$groups}) {
 		if ((not exists $users{$member}) || $users{$member} ne 'filter3') {
 			$users{$member} = $groups->{$groupName};
 		}
-
+		if (lc($cfg->param('general.generateSAAliases')) eq 'yes') {
+			$fullNames{$member} = $queryHandle->getFullName($member, $LDAPUserDN);
+		}
 
 	}
 }
@@ -79,6 +81,17 @@ foreach my $user (keys %users) {
 	print $tmpfile "$user=$users{$user}\n";
 }
 close($tmpfile);
+
+if (lc($cfg->param('general.generateSAAliases')) eq 'yes') {
+	my $aliasTmpFile = $tempDir .'/user-aliases';
+	open(my $aliasTmp, '>',$aliasTmpFile) or die "Could not open $aliasTmpFile";
+	foreach my $name (keys %fullNames) {
+		print $aliasTmp $fullNames{$name} .' '. $name ."\n";
+	}
+	close($aliasTmp);
+	unlink $cfg->param('general.SAAliasesFile');
+	move($aliasTmpFile, $cfg->param('general.SAAliasesFile'));
+}
 
 # Replace the old file
 unlink $filterListFile;

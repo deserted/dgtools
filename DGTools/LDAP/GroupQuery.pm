@@ -98,5 +98,24 @@ sub getUsername {
 	return $userName;
 }
 
+sub getFullName {
+		my ($self, $user, $userBaseDN) = @_;
+	##				 '(&(objectClass=group)(cn='.$group.'))'
+	my $LDAPFilter = '(&(objectClass=person)(cn='.$user.'))';
+	my $ldap = Net::LDAP->new($self->{LDAPHost}) or die "$@";
+	$ldap->bind("$self->{LDAPUser}", password=> "$self->{LDAPPass}");
+	## Query ad again to get the sAMAccountName
+	my $userResult = $ldap->search( base=>"$userBaseDN", scope=>'sub', filter=>"$LDAPFilter", attrs=>['givenName', 'sn']);
+	if ($userResult->code) {
+		print $userResult->error." Error code: ". $userResult->code ."\n";
+		exit 1;
+	}
+	my $userEntry = $userResult->entry;
+	my $fullName = $userEntry->get_value('givenName') ."_".$userEntry->get_value('givenName');
+	$ldap->unbind;
+	return $fullName;
+
+}
+
 
 1;

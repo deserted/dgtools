@@ -3,6 +3,9 @@
 
 [general]
 #tempfolder = /tmp
+## set the following to yes if you would like to generate a user-aliases file for use with squidanalyzer
+#generateSAAliases = no
+#SAAliasesFile = /etc/squidanalyzer/user-aliases
 
 [dansguardian]
 ## location of Dansguardians filtergroupslist config file - default is /etc/dansguardian/lists/filtergroupslist
