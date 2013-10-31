@@ -1,0 +1,27 @@
+## Config File for Dansguardian group filter, pulls data from AD groups and builds the dansguardian filtergroupslist
+## Default values are commented out, uncomment if you wish to change
+
+[general]
+#tempfolder = /tmp
+
+[dansguardian]
+## location of Dansguardians filtergroupslist config file - default is /etc/dansguardian/lists/filtergroupslist
+#filterlist=/etc/dansguardian/lists/filtergroupslist
+
+## Define LDAP connection details, and filter strings to find location of Groups and Users
+[ldap]
+host=ldap.host.name
+
+## DN strings for finding groups and Users
+groupdn='ou=Groups,dc=somedomain,dc=com'
+userdn='OU=Users,dc=somedomain,dc=com'
+## Define login for LDAP server
+username=ldap user
+password=ldap pass
+
+## Groups are configured in groupname=filtergroup pairs, one group per line. - ie
+## Internet Access=filter2
+## No Web Access=filter1
+## The filter values will depend on your dansguardian configuration - filter1 for group f1, filter2 for group f2 etc...
+[groups]
+Internet Access=filter2
