@@ -1,4 +1,23 @@
 package DGTools::LDAP::GroupQuery;
+
+#    Copyright 2013 Tim Allingham
+#    For questions, comments or bug reports you can contact
+#    me at tim@timallingham.net
+#		 This file is part of the DGTools package.
+#
+#    DGTools is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    DGTools is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with DGTools.  If not, see <http://www.gnu.org/licenses/>.
+
 use strict;
 use warnings;
 use Net::LDAP;
